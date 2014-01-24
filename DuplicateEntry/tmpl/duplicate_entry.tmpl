@@ -1,0 +1,59 @@
+<$mt:setvar name="page_title" value="<__trans phrase="Duplicate or Move">"$>
+
+<mt:setvarblock name="js_include" append="1">
+    <!--// this MUST loaded after mt.js // -->
+    <script type="text/javascript" src="<$mt:var name="static_uri"$>js/edit.js?v=<$mt:var name="mt_version_id" escape="url"$>"></script>
+</mt:setvarblock>
+
+<mt:include name="include/header.tmpl">
+
+<form method="post" action="<$mt:var name="script_url"$>">
+<input type="hidden" name="__mode" value="duplicate_mode_copy" >
+<input type="hidden" name="return_args" value="<TMPL_VAR NAME=RETURN_ARGS ESCAPE=HTML>" />
+<input type="hidden" name="magic_token" value="<mt:var name=magic_token encode_html=1>" />
+
+<h2><__trans phrase="Action will apply these items below"></h2>
+<div class="import-process">
+  <pre class="last-child" style="height:150px;">
+<TMPL_LOOP NAME=ITEMS><span><TMPL_VAR NAME=NAME ESCAPE=HTML><input type="hidden" name="id" value="<TMPL_VAR NAME=ID>" /></span>
+</TMPL_LOOP>
+  </pre>
+</div>
+
+<div class="system" style="margin-top:20px;margin-bottom:20px;">
+  <h2><__trans phrase="Select the target blog"></h2>
+<select name="blog_id"><TMPL_LOOP NAME=BLOGS>
+  <option value="<TMPL_VAR NAME=ID>"<TMPL_IF NAME=SELECTED> selected="selected"</TMPL_IF>><TMPL_VAR NAME=NAME ESCAPE=HTML></option>
+</TMPL_LOOP></select>
+</div>
+
+<div class="section" style="margin-bottom:15px;">
+  <h2><__trans phrase="Actions"></h2>
+  <div class="actions-bar">
+    <div class="actions-bar-inner pkg actions">
+    <button
+        mt:mode="duplicate_mode_copy"
+        type="submit"
+        accesskey="s"
+        title="<__trans phrase="Duplicate"> (s)"
+        class="primary-button action"
+        ><__trans phrase="Duplicate"></button>
+    <button
+        mt:mode="duplicate_mode_move"
+        type="submit"
+        accesskey="v"
+        title="<__trans phrase="Move"> (v)"
+        class="primary-button action"
+        ><__trans phrase="Move"></button>
+    <button 
+        mt:mode="duplicate_mode_cancel"
+        type="submit" 
+        accesskey="x" 
+        title="<__trans phrase="Cancel"> (x)"
+        ><__trans phrase="Cancel"></button>
+    </div>
+  </div>
+</div>
+</form>
+
+<mt:include name="include/footer.tmpl">
